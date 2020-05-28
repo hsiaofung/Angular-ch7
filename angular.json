@@ -119,6 +119,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "angular-ch7"
+    }
+  },
+  "defaultProject": "angular-ch7",
+  "cli": {
+    "analytics": false
+  }
 }
