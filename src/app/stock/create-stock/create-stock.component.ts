@@ -4,6 +4,8 @@ import {
   FormGroup,
   Validators,
   FormBuilder,
+  FormArray,
+  FormArrayName,
 } from '@angular/forms';
 import { Stock } from 'src/app/model/stock';
 
@@ -20,7 +22,7 @@ export class CreateStockComponent {
   //   code: new FormControl(null, [Validators.required, Validators.minLength(2)]),
   //   price: new FormControl(0, [Validators.required, Validators.min(0)]),
   // });
-  private stock: Stock;
+  public stock: Stock;
   public stockForm: FormGroup;
   constructor(private fb: FormBuilder) {
     this.createForm();
@@ -41,7 +43,28 @@ export class CreateStockComponent {
       name: [null, Validators.required],
       code: [null, [Validators.required, Validators.minLength(2)]],
       price: [0, [Validators.required, Validators.min(0)]],
+      notablePeople: this.fb.array([]), // notablePeople初始化為FormArray實例
     });
+  }
+
+  get notablePeople(): FormArray {
+    // 方便從模板存取FormArray的getter
+    return this.stockForm.get('notablePeople') as FormArray;
+  }
+
+  // 將新的FormGroup實例加入FormArray
+  addNotablePerson() {
+    this.notablePeople.push(
+      this.fb.group({
+        name: ['', Validators.required],
+        title: ['', Validators.required],
+      })
+    );
+  }
+
+  // 從FormArray刪除特定FormGroup實例。
+  removeNotablePerson(index: number) {
+    this.notablePeople.removeAt(index);
   }
 
   loadStockFromServer() {

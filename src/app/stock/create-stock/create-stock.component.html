@@ -39,6 +39,33 @@
         </div>
       </div>
     </div>
+
+    <div formArrayName="notablePeople">
+      <div
+        *ngFor="let person of notablePeople.controls; let i = index"
+        [formGroupName]="i"
+        class="notable-people"
+      >
+        Person{{ i + 1 }}
+
+        <div>
+          <input type="text" placeholder="Person Name" formControlName="name" />
+        </div>
+        <div>
+          <input
+            type="text"
+            placeholder="Person Title"
+            formControlName="title"
+          />
+        </div>
+        <button type="button" (click)="removeNotablePerson(i)">
+          Remove Person
+        </button>
+      </div>
+    </div>
+    <button type="button" (click)="addNotablePerson()">
+      Add Notable Person
+    </button>
     <button (click)="onSubmit()">Submit</button>
     <button type="button" (click)="resetForm()">Reset</button>
     <button type="button" (click)="loadStockFromServer()">
@@ -51,3 +78,4 @@
 </div>
 <p>Form Control value:{{ stockForm.value | json }}</p>
 <p>Form Control status:{{ stockForm.status | json }}</p>
+<p>Stock Value:{{ stock | json }}</p>
